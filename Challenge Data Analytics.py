@@ -9,9 +9,43 @@ from operator import concat
 from xml.sax import default_parser_list
 import pandas as pd
 from sqlalchemy import create_engine
+import requests as rq
+
+################################################ DESCARGA DE LOS ARCHIVOS CSV ####################################################
+#ES NECESARIO ACLARAR QUE EN ESTE BLOQUE NO ES POSIBLE REALIZAR LA DESCARGA DEL ARCHIVO .CSV DE CINES, YA QUE DICHA URL PRESENTA
+#UN ERROR, EL CUAL NO PERMITE ABRIR DICHA PAGINA Y DESCARGAR EL ARCHIVO.
+#YO ME CONTACTE CON ALKEMY MEDIANTE INSTAGRAM PARA INDICAR DICHO INCONVENIENTE Y POR ESE MEDIO ME PASAR EL LINK DE GOOGLEDRIVE PARA 
+#PODER DESCARGA LA TABLA QUE PRESENTABA DICHO INCONVENIENTO.
+#EL TEMA ES QUE AL DESCARGAR MEDIANTE LA LIBRERIA REQUESTS LOS ARCHIVOS DESDE GOOGLE DRIVE, PRESENTABAN PROBLEMAS DE CODIFICACION
+#AL PROBAR LA DESCARGA DESDE LA PAGINA ORIGINAL, LOS ARCHIVOS SE DESCARGAN SIN NINGUN INCONVENIENTE. ES POR ESO QUE EN EL CODIGO
+#SE PRESENTA LA DESCARGA SOLO DE MUSEO Y BIBLIOTECA, PERO EL PROCEDIMIENTO ES EL MISMO.
+
+################################################# DESCARGA ARCHIVO .CSV MUSEO ####################################################
+req = rq.get('https://datos.cultura.gob.ar/dataset/37305de4-3cce-4d4b-9d9a-fec3ca61d09f/resource/4207def0-2ff7-41d5-9095-d42ae8207a5d/download/museos_datosabiertos.csv')
+url_content = req.content
+csv_file = open('C:/Users/Leandro/Documents/PYTHON/Archivos/Museo-2022-septiembre-museo-13-09-2022', 'wb')
+csv_file.write(url_content)
+csv_file.close()
+##################################################################################################################################
+
+############################################### DESCARGA ARCHIVO .CSV BIBLIOTECA #################################################
+req = rq.get('https://datos.cultura.gob.ar/dataset/37305de4-3cce-4d4b-9d9a-fec3ca61d09f/resource/01c6c048-dbeb-44e0-8efa-6944f73715d7/download/biblioteca_popular.csv')
+url_content = req.content
+csv_file = open('C:/Users/Leandro/Documents/PYTHON/Archivos/Biblioteca-2022-septiembre-biblioteca-13-09-2022', 'wb')
+csv_file.write(url_content)
+csv_file.close()
+##################################################################################################################################
+
+################################################## DESCARGA ARCHIVO .CSV CINE ####################################################
+#COMO SE COMENTO ANTERIORMENTE, NO ES POSIBLE DESCARGAR EL ARCHIVO MEDIANTE REQUESTS DESDE LA PAGINA DATOS.GOB.AR, YA QUE DICHA
+#URL PRESENTA UN ERROR.
+##################################################################################################################################
 
 ##################################################################################################################################
-#EN ESTOS TRES PRIMEROS BLOQUES LO QUE REALIZAMOS ES ABRIR LOS 3 ARCHIVOS CSV, LOS QUE CORRESPONDEN A MUSEO, CINE Y BIBLIOTECA
+
+
+##################################################################################################################################
+#EN ESTOS TRES BLOQUES SIGUIENTES, LO QUE REALIZAMOS ES ABRIR LOS 3 ARCHIVOS CSV, LOS QUE CORRESPONDEN A MUSEO, CINE Y BIBLIOTECA
 #LUEGO NORMALIZAMOS LOS 3 ARCHIVOS PARA QUE AL CONCATENAR, LOS 3 TENGAN LAS COLUMNANS CON LOS MISMO NOMBRES Y SE REALICE 
 #CORRECTAMENTE LA CONCATENACIÓN.
 #POR ULTIMO SE LE AGREGA A CADA ARCHIVO UNA COLUMNA NUEVA, LA CUAL TIENE EL NOMBRE DE TIPO. EN DICHA COLUMNA SE LE AGREGA
